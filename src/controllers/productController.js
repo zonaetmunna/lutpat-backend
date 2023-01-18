@@ -9,9 +9,7 @@ const responseGenerate = require("../utils/responseGenerate");
 // create products
 const createProduct = async (req, res, next) => {
   try {
-
     const body = req.body;
-
     // call model
     const product = new Product(body);
     // save database
@@ -54,8 +52,11 @@ const getProducts = async (req, res, next) => {
   try {
     // find product from server req
     const query = req.query;
+    console.log(query);
     // find product with server req from database
     const products = await Product.find(query);
+    console.log(products);
+  
 
     return res.json(responseGenerate(products));
 
@@ -79,8 +80,6 @@ const getProductById = async (req, res, next) => {
     next(err);
   }
 };
-
-
 
 
 // exports

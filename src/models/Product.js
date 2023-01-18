@@ -4,7 +4,6 @@ const { Schema } = mongoose;
 
 
 const ProductSchema = new Schema({
-
   name: {
 		type: String,
 		required: true,
@@ -35,5 +34,5 @@ const ProductSchema = new Schema({
 	
 }, { timestamp: true }
 );
-  
+
 module.exports = mongoose.model('Product', ProductSchema);

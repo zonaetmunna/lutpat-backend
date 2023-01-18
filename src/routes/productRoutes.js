@@ -7,24 +7,22 @@ const accessControl = require('../accessControl');
 const uploader = require('../lib/multer');
 
 
-
-// api
-// post
+// post route
 router.post('/',
   passport.authenticate('jwt', { session: false }),
 	accessControl.grantAccess('createOwn', 'product'),
   uploader.single('image'),
   createProduct
 );
-// delete
+// delete route
 router.delete('/:id',
   passport.authenticate('jwt', { session: false }),
   accessControl.grantAccess('deleteOwn', 'product'), 
   deleteProduct
 );
-// get
+// get route
 router.get('/', getProducts);
-// get
+// get single product route
 router.get('/:id', getProductById);
 
 
