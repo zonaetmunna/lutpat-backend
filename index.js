@@ -3,8 +3,8 @@ const express = require("express");
 const cors = require("cors");
 require('dotenv').config();
 // internal imports
-const db = require('./src/config/db')
-const routes = require('./src/routes/index');
+const db = require('./src/config/db');
+const routes = require('./src/routes/routes');
 
 // app and port declared
 const app = express();
