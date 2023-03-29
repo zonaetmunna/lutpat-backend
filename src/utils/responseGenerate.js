@@ -1,10 +1,15 @@
-const responseGenerate = (data, message = null, error = false, token = null) => {
+const responseGenerate = (
+  data,
+  message = null,
+  error = false,
+  token = null
+) => {
   return {
     error,
     data,
     message,
-    token
-  }
+    token,
+  };
 };
 
 module.exports = responseGenerate;

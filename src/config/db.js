@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-require('dotenv').config();
+require("dotenv").config();
 
 let dbUrl = "";
 if (process.env.NODE_ENV === "production") {
@@ -36,6 +36,5 @@ mongoose.connect(
     }
   }
 );
-
 
 module.exports = mongoose;
