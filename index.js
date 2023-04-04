@@ -17,9 +17,9 @@ app.use(cors());
 app.use(express.json());
 
 // initial routes
-app.get("/", (req, res) => {
+/* app.get("/", (req, res) => {
   res.json("hi commerce app");
-});
+}); */
 
 // routes
 app.use("/api", routes);
