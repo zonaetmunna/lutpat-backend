@@ -7,8 +7,10 @@ const responseGenerate = require("../utils/responseGenerate");
 // create products
 const createProduct = async (req, res, next) => {
   try {
+    // req.body
     const body = req.body;
-    // call model
+    console.log(body);
+    // call model instance
     const product = new Product(body);
     // save database
     await product.save();

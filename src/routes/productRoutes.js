@@ -14,9 +14,9 @@ const uploader = require("../lib/multer");
 // post route
 router.post(
   "/",
-  passport.authenticate("jwt", { session: false }),
-  accessControl.grantAccess("createOwn", "product"),
-  uploader.single("image"),
+  // passport.authenticate("jwt", { session: false }),
+  // accessControl.grantAccess("createOwn", "product"),
+  // uploader.single("image"),
   createProduct
 );
 // delete route
