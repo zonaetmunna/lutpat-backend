@@ -25,7 +25,7 @@ const signup = async (req, res, next) => {
 //login
 const login = async (req, res, next) => {
   try {
-    // get user with findone
+    // get user with finding
     const user = await User.findOne({ email: req.body.email });
 
     // check user
