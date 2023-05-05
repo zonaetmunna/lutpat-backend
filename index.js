@@ -8,7 +8,7 @@ const routes = require("./src/routes/routes");
 
 // app and port declared
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 require("dotenv").config({ path: `${__dirname}/../.env` });
 
