@@ -11,21 +11,18 @@ const {
 
 router.post(
   "/",
-  passport.authenticate("jwt", { session: false }),
-  accessControl.grantAccess("createOwn", "store"),
-  uploader.single("image"),
+  // passport.authenticate("jwt", { session: false }),
+  // accessControl.grantAccess("createOwn", "store"),
+  // uploader.single("image"),
   createStore
 );
-
+router.get("/", getStores);
+router.get("/:id", getStoreById);
 router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   accessControl.grantAccess("deleteOwn", "store"),
   deleteStore
 );
-
-router.get("/:id", getStoreById);
-
-router.get("/", getStores);
 
 module.exports = router;

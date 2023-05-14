@@ -11,20 +11,17 @@ const {
 
 router.post(
   "/",
-  passport.authenticate("jwt", { session: false }),
-  accessControl.grantAccess("createOwn", "category"),
+  // passport.authenticate("jwt", { session: false }),
+  // accessControl.grantAccess("createOwn", "category"),
   createCategory
 );
-
+router.get("/", getCategorys);
+router.get("/:id", getCategoryById);
 router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   accessControl.grantAccess("deleteOwn", "category"),
   deleteCategory
 );
-
-router.get("/:id", getCategoryById);
-
-router.get("/", getCategorys);
 
 module.exports = router;

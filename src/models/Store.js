@@ -27,6 +27,10 @@ const StoreSchema = new Schema(
       default: "pending",
       enum: ["pending", "verified", "blocked"],
     },
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+    },
   },
   { timestamp: true }
 );

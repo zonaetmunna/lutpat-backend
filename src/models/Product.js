@@ -31,6 +31,10 @@ const ProductSchema = new Schema(
       ref: "Store",
       required: false,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+    },
   },
   { timestamp: true }
 );

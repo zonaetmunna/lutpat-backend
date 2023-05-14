@@ -47,20 +47,16 @@ const deleteProduct = async (req, res, next) => {
 // get all products
 const getProducts = async (req, res, next) => {
   try {
-    // find product from server req
-    const query = req.query;
-    console.log(query);
-    // find product with server req from database
-    const products = await Product.find(query);
-    console.log(products);
-
+    const { category } = req.query;
+    const query = category ? { "category.name": category } : {};
+    const products = await Product.find(query).sort({ createdAt: -1 });
     return res.json(responseGenerate(products));
   } catch (err) {
     next(err);
   }
 };
 
-// single proudct get
+// single product get
 const getProductById = async (req, res, next) => {
   try {
     // find id from server
@@ -75,10 +71,22 @@ const getProductById = async (req, res, next) => {
   }
 };
 
+const getAllProductByShop = async (req, res, next) => {
+  try {
+    const shopId = req.params.id;
+    console.log(shopId);
+    const products = await Product.find({ store: shopId }).populate("category");
+    return res.json(responseGenerate(products));
+  } catch (error) {
+    next(error);
+  }
+};
+
 // exports
 module.exports = {
   createProduct,
   deleteProduct,
   getProducts,
   getProductById,
+  getAllProductByShop,
 };

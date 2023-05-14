@@ -7,6 +7,7 @@ const {
   deleteProduct,
   getProductById,
   getProducts,
+  getAllProductByShop,
 } = require("../controllers/productController");
 const accessControl = require("../accessControl");
 const uploader = require("../lib/multer");
@@ -27,6 +28,7 @@ router.delete(
   deleteProduct
 );
 // get route
+router.get("/get-shop-product/:id", getAllProductByShop);
 router.get("/", getProducts);
 // get single product route
 router.get("/:id", getProductById);

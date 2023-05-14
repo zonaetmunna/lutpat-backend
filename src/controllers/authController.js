@@ -15,6 +15,7 @@ const signup = async (req, res, next) => {
       phone: req.body.phone,
     };
     const user = new User(body);
+    console.log(user);
     await user.save();
     return res.json(responseGenerate(user, "Registration successful!", false));
   } catch (err) {
@@ -47,7 +48,7 @@ const login = async (req, res, next) => {
           email: user.email,
           id: user._id,
           profileImage: user.profileImage,
-          phone: user.profileImage,
+          phone: user.phone,
           role: user.role,
           status: user.status,
           token,
