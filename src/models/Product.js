@@ -21,9 +21,13 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
-    category: {
+    /* category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
+      required: false,
+    }, */
+    category: {
+      type: String, // Update the type to String
       required: false,
     },
     store: {
