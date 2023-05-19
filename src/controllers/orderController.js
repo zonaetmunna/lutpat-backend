@@ -4,13 +4,17 @@ const responseGenerate = require("../utils/responseGenerate");
 // get / create order
 const createOrder = async (req, res, next) => {
   try {
-    const userId = req.user._id;
-    const body = { ...req.body, userId };
-    console.log(body);
+    const body = { ...req.body };
 
-    console.log(userId);
+    const paymentOrder = {
+      userId: body.userId,
+      products: body.products,
+      billingAddress: body.billingAddress,
+      totalAmount: body.totalAmount,
+      paymentInfo: body.paymentInfo,
+    };
 
-    const order = new Order(body);
+    const order = new Order(paymentOrder);
     await order.save();
     return res
       .status(201)
@@ -65,9 +69,27 @@ const getOrder = async (req, res, next) => {
   }
 };
 
+const getOrderWithUser = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    console.log(userId);
+    const orders = await Order.find({ userId }).populate({
+      path: "products",
+      populate: {
+        path: "store",
+      },
+    });
+
+    return res.json(responseGenerate(orders));
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createOrder,
   deleteOrder,
   getOrderById,
   getOrder,
+  getOrderWithUser,
 };

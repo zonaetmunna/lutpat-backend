@@ -6,6 +6,7 @@ const {
   deleteOrder,
   getOrderById,
   getOrder,
+  getOrderWithUser,
 } = require("../controllers/orderController");
 
 router.post(
@@ -25,5 +26,6 @@ router.delete(
 router.get("/:id", getOrderById);
 
 router.get("/", getOrder);
+router.get("/user/:userId", getOrderWithUser);
 
 module.exports = router;

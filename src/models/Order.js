@@ -17,11 +17,11 @@ const OrderSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      required: true,
+      // required: true,
       ref: "User",
     },
     products: [OrderProductSchema],
-    shippingInformation: {
+    billingAddress: {
       firstName: String,
       lastName: String,
       email: String,
@@ -37,17 +37,17 @@ const OrderSchema = new Schema(
       enum: ["pending", "verified", "delivered", "rejected"],
     },
     totalAmount: Number,
-    payment: {
+    paymentInfo: {
       method: {
         type: String,
         enum: ["stripe", "bkash"],
         // required: true,
       },
-      stripe: {
+      stripePayment: {
         paymentIntentId: String,
         status: String,
       },
-      bkash: {
+      bkashPayment: {
         transactionId: String,
         status: String,
       },
