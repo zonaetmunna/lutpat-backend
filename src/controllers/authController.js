@@ -71,8 +71,106 @@ const authUser = async (req, res, next) => {
   }
 };
 
+// Seller registration
+const sellerRegistration = async (req, res, next) => {
+  try {
+    const body = {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      phone: req.body.phone,
+      role: "seller", // Set the role as "seller"
+      status: "pending", // Set the status as "pending" or modify as needed
+      profileImage: req.file.filename, // Assuming you are using multer or similar middleware for file uploads
+    };
+
+    const user = new User(body);
+    await user.save();
+
+    // Issue JWT token
+    const token = jwt.issueJWT(user);
+
+    return res.json(
+      responseGenerate(
+        {
+          name: user.name,
+          email: user.email,
+          _id: user._id,
+          profileImage: user.profileImage,
+          phone: user.phone,
+          role: user.role,
+          status: user.status,
+          token,
+        },
+        "Seller registration successful!",
+        false
+      )
+    );
+  } catch (err) {
+    next(err);
+  }
+};
+
+// for admin
+const getAllUsers = async (req, res, next) => {
+  try {
+    const query = req.query;
+    const users = await User.find(query);
+    return res.json(
+      responseGenerate(users, "Users retrieved successfully!", false)
+    );
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Seller login
+const sellerLogin = async (req, res, next) => {
+  try {
+    // Find user with the given email and role as "seller"
+    const user = await User.findOne({ email: req.body.email, role: "seller" });
+
+    // Check if user exists
+    if (!user) {
+      throw new Error("No seller found with this email!");
+    }
+
+    // Verify the password
+    const isValidPassword = await user.isValidPassword(req.body.password);
+
+    if (!isValidPassword) {
+      throw new Error("Incorrect email or password!");
+    }
+
+    // Issue JWT token
+    const token = jwt.issueJWT(user);
+
+    return res.json(
+      responseGenerate(
+        {
+          name: user.name,
+          email: user.email,
+          _id: user._id,
+          profileImage: user.profileImage,
+          phone: user.phone,
+          role: user.role,
+          status: user.status,
+          token,
+        },
+        "Seller login successful!",
+        false
+      )
+    );
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   signup,
   login,
   authUser,
+  getAllUsers,
+  sellerLogin,
+  sellerRegistration,
 };
