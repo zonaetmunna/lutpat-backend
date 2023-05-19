@@ -49,7 +49,6 @@ const deleteProduct = async (req, res, next) => {
 const getProducts = async (req, res, next) => {
   try {
     let queries = { ...req.query };
-    console.log(queries);
 
     // Sort, page, limit -> exclude
     const excludeFields = ["search", "category", "sort", "page", "limit"];
@@ -110,7 +109,6 @@ const getProducts = async (req, res, next) => {
     }
 
     const products = await productsQuery.exec();
-    console.log(products);
 
     // const products = await productsQuery.exec();
 

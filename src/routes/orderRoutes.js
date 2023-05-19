@@ -10,15 +10,15 @@ const {
 
 router.post(
   "/",
-  passport.authenticate("jwt", { session: false }),
-  accessControl.grantAccess("createOwn", "order"),
+  // passport.authenticate("jwt", { session: false }),
+  // accessControl.grantAccess("createOwn", "order"),
   createOrder
 );
 
 router.delete(
   "/:id",
-  passport.authenticate("jwt", { session: false }),
-  accessControl.grantAccess("deleteOwn", "order"),
+  // passport.authenticate("jwt", { session: false }),
+  // accessControl.grantAccess("deleteOwn", "order"),
   deleteOrder
 );
 
