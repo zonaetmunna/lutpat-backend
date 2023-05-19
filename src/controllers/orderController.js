@@ -6,9 +6,9 @@ const createOrder = async (req, res, next) => {
   try {
     const userId = req.user._id;
     const body = { ...req.body, userId };
+    console.log(body);
 
     console.log(userId);
-    console.log(body);
 
     const order = new Order(body);
     await order.save();
