@@ -51,9 +51,56 @@ const getCategoryById = async (req, res, next) => {
 // get category
 const getCategorys = async (req, res, next) => {
   try {
-    const query = req.query;
-    const categorys = await Category.find(query);
-    return res.json(responseGenerate(categorys));
+    let queries = { ...req.query };
+
+    const excludeFields = ["search", "sort", "page", "limit"];
+    excludeFields.forEach((field) => delete queries[field]);
+
+    let queryString = JSON.stringify(queries);
+    queryString = queryString.replace(
+      /\b(gt|gte|lt|lte)\b/g,
+      (match) => `$${match}`
+    );
+    queries = JSON.parse(queryString);
+
+    const filters = {
+      limit: 10,
+    };
+
+    if (req.query.search) {
+      const searchText = req.query.search;
+      queries.name = { $regex: searchText, $options: "i" };
+    }
+
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(",").join(" ");
+      filters.sortBy = sortBy;
+    }
+
+    if (req.query.fields) {
+      const fields = req.query.fields.split(",").join(" ");
+      filters.fields = fields;
+    }
+
+    if (req.query.page) {
+      const { page, limit } = req.query;
+      const skip = (page - 1) * parseInt(limit);
+      filters.skip = skip;
+      filters.limit = parseInt(limit);
+    }
+
+    const categoriesQuery = Category.find(queries)
+      .skip(filters.skip)
+      .limit(filters.limit)
+      .select(filters.fields)
+      .sort(filters.sortBy);
+
+    if (req.query.populateCategory) {
+      categoriesQuery.populate("category");
+    }
+
+    const categories = await categoriesQuery.exec();
+    return res.json(responseGenerate(categories));
   } catch (err) {
     next(err);
   }

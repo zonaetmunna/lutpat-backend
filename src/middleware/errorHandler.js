@@ -1,4 +1,3 @@
-// const _log = require("../utils/logger");
 const logger = require("../utils/logger");
 const responseGenerate = require("../utils/responseGenerate");
 

@@ -11,13 +11,17 @@ const createProduct = async (req, res, next) => {
     // req.body
     const body = req.body;
     console.log(body);
-    // call model instance
+
+    // Check if a file was uploaded
+
     const product = new Product(body);
-    // save database
+
+    // Save to database
     await product.save();
+
     return res
       .status(201)
-      .json(responseGenerate(product, "Product Added successfully!", false));
+      .json(responseGenerate(product, "Product added successfully!", false));
   } catch (error) {
     next(error);
   }
