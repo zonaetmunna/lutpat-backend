@@ -18,7 +18,7 @@ router.post(
   "/",
   // passport.authenticate("jwt", { session: false }),
   // accessControl.grantAccess("createOwn", "product"),
-  // uploader.single("image"),
+  uploader.array("image", 4),
   createProduct
 );
 // update

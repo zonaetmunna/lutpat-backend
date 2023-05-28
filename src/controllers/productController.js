@@ -8,15 +8,23 @@ const responseGenerate = require("../utils/responseGenerate");
 // create products
 const createProduct = async (req, res, next) => {
   try {
-    // req.body
-    const body = req.body;
-    console.log(body);
+    const { name, price, description, category, store } = req.body;
+    const images = req.files.map((file) => file.path); // Get the paths of the uploaded image files
 
-    // Check if a file was uploaded
+    // Create a new Product instance
+    const product = new Product({
+      name,
+      price,
+      description,
+      image: images[0],
+      anotherImage: images.slice(1),
+      category,
+      store,
+    });
 
-    const product = new Product(body);
+    console.log(product);
 
-    // Save to database
+    // Save the product to the database
     await product.save();
 
     return res
