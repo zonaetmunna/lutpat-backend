@@ -8,6 +8,7 @@ const {
   getProductById,
   getProducts,
   getAllProductByShop,
+  updateProduct,
 } = require("../controllers/productController");
 const accessControl = require("../accessControl");
 const uploader = require("../lib/multer");
@@ -20,11 +21,18 @@ router.post(
   // uploader.single("image"),
   createProduct
 );
+// update
+router.put(
+  "/:id",
+  // passport.authenticate("jwt", { session: false }),
+  // accessControl.grantAccess("updateOwn", "product"),
+  updateProduct
+);
 // delete route
 router.delete(
   "/:id",
-  passport.authenticate("jwt", { session: false }),
-  accessControl.grantAccess("deleteOwn", "product"),
+  // passport.authenticate("jwt", { session: false }),
+  // accessControl.grantAccess("deleteOwn", "product"),
   deleteProduct
 );
 // get route

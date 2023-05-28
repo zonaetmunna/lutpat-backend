@@ -27,6 +27,29 @@ const createProduct = async (req, res, next) => {
   }
 };
 
+// Update product
+const updateProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params; // Get the product ID from the request parameters
+    const updates = req.body; // Get the updates from the request body
+    console.log(id);
+    console.log(updates);
+    // Find the product by ID and update it
+    const product = await Product.findByIdAndUpdate(id, updates);
+
+    // Check if the product exists
+    if (!product) {
+      return res
+        .status(404)
+        .json(responseGenerate(null, "No product found with this ID!", true));
+    }
+
+    return res.json(responseGenerate(product));
+  } catch (error) {
+    next(error);
+  }
+};
+
 // delete product
 const deleteProduct = async (req, res, next) => {
   try {
@@ -151,6 +174,7 @@ const getAllProductByShop = async (req, res, next) => {
 // exports
 module.exports = {
   createProduct,
+  updateProduct,
   deleteProduct,
   getProducts,
   getProductById,

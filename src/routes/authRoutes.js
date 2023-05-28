@@ -7,6 +7,9 @@ const {
   login,
   authUser,
   getAllUsers,
+  getAllSeller,
+  updateSeller,
+  deleteSeller,
 } = require("../controllers/authController");
 const errorHandler = require("../middleware/errorHandler");
 const accessControl = require("../accessControl");
@@ -21,6 +24,8 @@ router.get(
   authUser
 );
 router.get("/users", getAllUsers);
-
+router.get("/sellers", getAllSeller);
+router.put("/seller/:id", updateSeller);
+router.delete("/seller/:id", deleteSeller);
 // router exports
 module.exports = router;

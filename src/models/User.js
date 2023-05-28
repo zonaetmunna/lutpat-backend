@@ -2,6 +2,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const bcrypt = require("bcrypt");
+const validator = require("validator");
 
 const UserSchema = new Schema(
   {
@@ -9,6 +10,13 @@ const UserSchema = new Schema(
       type: String,
       required: [true, "Name is required!"],
       trim: true,
+    },
+    lastName: {
+      type: String,
+      required: [false, "Please provide a first name"],
+      trim: true,
+      minLength: [3, "Name must be at least 3 characters."],
+      maxLength: [100, "Name is too large"],
     },
     email: {
       type: String,
@@ -24,8 +32,14 @@ const UserSchema = new Schema(
     },
     phone: {
       type: String,
-      required: [true, "Phone number is required!"],
-      trim: true,
+      required: [true, "phone is required!"],
+      unique: true,
+      validate: {
+        validator: (value) => {
+          return validator.isMobilePhone(value);
+        },
+        message: "Please provide a valid phone number",
+      },
     },
     role: {
       type: String,
@@ -37,7 +51,10 @@ const UserSchema = new Schema(
       default: "pending",
       enum: ["pending", "verified", "blocked"],
     },
-    profileImage: String,
+    profileImage: {
+      type: String,
+      validate: [validator.isURL, "Please provide a valid url"],
+    },
   },
   { timestamp: true }
 );

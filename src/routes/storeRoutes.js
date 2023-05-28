@@ -7,6 +7,7 @@ const {
   deleteStore,
   getStoreById,
   getStores,
+  updateStore,
 } = require("../controllers/storeController");
 
 router.post(
@@ -18,10 +19,16 @@ router.post(
 );
 router.get("/", getStores);
 router.get("/:id", getStoreById);
+router.put(
+  "/:id",
+  // passport.authenticate("jwt", { session: false }),
+  // accessControl.grantAccess("deleteOwn", "store"),
+  updateStore
+);
 router.delete(
   "/:id",
-  passport.authenticate("jwt", { session: false }),
-  accessControl.grantAccess("deleteOwn", "store"),
+  // passport.authenticate("jwt", { session: false }),
+  // accessControl.grantAccess("deleteOwn", "store"),
   deleteStore
 );
 
