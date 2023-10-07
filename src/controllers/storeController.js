@@ -1,20 +1,18 @@
-const { cloudinary_js_config } = require("../lib/cloudinary");
+const cloudinary = require("../lib/cloudinary");
 const Store = require("../models/Store");
 const responseGenerate = require("../utils/responseGenerate");
 
 const createStore = async (req, res, next) => {
   try {
-    // future handle
-    /* const owner = req.user._id;
-		const body = { ...req.body, owner };
-		const upload = await cloudinary_js_config.uploader.upload(req.file.path);
-		
-		body.image = upload.public_id; 
-		const store = new Store(body);
-		*/
-    const body = req.body;
+    const owner = req.user._id;
+    const body = { ...req.body, owner };
+    console.log(body);
+    const upload = await cloudinary.uploader.upload(req.file.path);
 
-    const result = await Store.create(body);
+    body.image = upload.public_id;
+    const store = new Store(body);
+    await store.save();
+
     return res
       .status(201)
       .json(responseGenerate(result, "Store Added successfully!", false));

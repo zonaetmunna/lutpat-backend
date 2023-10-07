@@ -76,7 +76,7 @@ const sellerRegistration = async (req, res, next) => {
       phone: req.body.phone,
       role: "seller", // Set the role as "seller"
       status: "pending", // Set the status as "pending" or modify as needed
-      profileImage: req.file.filename, // Assuming you are using multer or similar middleware for file uploads
+      profileImage: req.body.profileImage, // Assuming you are using multer or similar middleware for file uploads
     };
 
     const user = new User(body);

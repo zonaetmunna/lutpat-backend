@@ -1,30 +1,34 @@
 // external imports
 
 // internal imports
-const { default: mongoose } = require("mongoose");
 const Product = require("../models/Product");
 const responseGenerate = require("../utils/responseGenerate");
+const cloudinary = require("../lib/cloudinary");
 
 // create products
 const createProduct = async (req, res, next) => {
   try {
-    const { name, price, description, category, store } = req.body;
-    const images = req.files.map((file) => file.path); // Get the paths of the uploaded image files
+    const body = req.body;
+    let images = [];
 
-    // Create a new Product instance
-    const product = new Product({
-      name,
-      price,
-      description,
-      image: images[0],
-      anotherImage: images.slice(1),
-      category,
-      store,
-    });
+    // Handle single image upload
+    if (req.file) {
+      const upload = await cloudinary.uploader.upload(req.file.path);
+      body.image = upload.public_id;
+    }
 
-    console.log(product);
+    // Handle multiple image uploads
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const upload = await cloudinary.uploader.upload(file.path);
+        images.push(upload.public_id);
+      }
+    }
 
-    // Save the product to the database
+    // Add the images array to the body object
+    body.images = images;
+
+    const product = new Product(body);
     await product.save();
 
     return res

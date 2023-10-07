@@ -10,6 +10,7 @@ const {
   getAllSeller,
   updateSeller,
   deleteSeller,
+  sellerRegistration,
 } = require("../controllers/authController");
 const errorHandler = require("../middleware/errorHandler");
 const accessControl = require("../accessControl");
@@ -17,6 +18,7 @@ const accessControl = require("../accessControl");
 // api routes
 router.post("/signup", signup, errorHandler);
 router.post("/login", login, errorHandler);
+router.post("/seller",sellerRegistration)
 router.get(
   "/auth-user",
   passport.authenticate("jwt", { session: false }),

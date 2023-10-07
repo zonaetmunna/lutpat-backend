@@ -8,6 +8,7 @@ router.use("/products", require("./productRoutes"));
 router.use("/category", require("./categoryRoutes"));
 router.use("/order", require("./orderRoutes"));
 router.use("/store", require("./storeRoutes"));
+router.use("/unit", require("./unitRoutes"));
 router.use("/marchent", require("./marchentRoutes"));
 router.use("/dashboard", require("./dashboardRoutes"));
 router.use("/create-payment-intent", paymentProcess);
